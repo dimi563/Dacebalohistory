@@ -5,178 +5,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dacebalohistory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-  :root {
-    --gold: #C9A84C;
-    --gold-light: #E8D5A3;
-    --gold-dim: #7A6530;
-    --dark-bg: #0D0D0D;
-    --dark-surface: #161616;
-    --dark-card: #1E1E1E;
-    --dark-border: #2E2E2E;
-    --text-primary: #F0EDE4;
-    --text-secondary: #9A9488;
-    --text-muted: #5A5650;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--dark-bg); color: var(--text-primary); font-family: 'Inter', sans-serif; min-height: 100vh; }
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8D5A3;
+  --gold-dim: #7A6530;
+  --dark-bg: #0D0D0D;
+  --dark-surface: #141414;
+  --dark-card: #1C1C1C;
+  --dark-border: #2A2A2A;
+  --text-primary: #F0EDE4;
+  --text-secondary: #9A9488;
+  --text-muted: #5A5650;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--dark-bg);color:var(--text-primary);font-family:'Inter',sans-serif;min-height:100vh}
 
-  /* NAV */
-  .nav {
-    background: var(--dark-bg);
-    border-bottom: 0.5px solid var(--dark-border);
-    padding: 0 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
-    position: sticky; top: 0; z-index: 10;
-  }
-  .nav-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px; color: var(--gold);
-    letter-spacing: 0.03em; cursor: pointer; text-decoration: none;
-  }
-  .nav-right { display: flex; align-items: center; gap: 10px; }
-  .nav-btn {
-    display: flex; align-items: center; gap: 6px;
-    background: transparent; border: 0.5px solid var(--dark-border);
-    color: var(--text-secondary); padding: 6px 14px; border-radius: 20px;
-    font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;
-    transition: border-color .2s, color .2s;
-  }
-  .nav-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
-  .nav-btn i { font-size: 14px; }
+/* NAV */
+.nav{background:rgba(13,13,13,0.95);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--dark-border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:62px;position:sticky;top:0;z-index:50}
+.nav-brand{font-family:'Playfair Display',serif;font-size:19px;color:var(--gold);letter-spacing:0.04em;cursor:pointer;text-decoration:none}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-btn{display:flex;align-items:center;gap:5px;background:transparent;border:0.5px solid var(--dark-border);color:var(--text-secondary);padding:6px 14px;border-radius:20px;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;transition:border-color .2s,color .2s;letter-spacing:0.03em}
+.nav-btn:hover{border-color:var(--gold-dim);color:var(--gold)}
+.nav-btn i{font-size:13px}
 
-  /* PAGES */
-  .page { display: none; }
-  .page.active { display: block; }
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
 
-  /* HOME */
-  .content { max-width: 640px; margin: 0 auto; padding: 3rem 2rem; }
-  .section-label {
-    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 2rem;
-  }
-  .article-item {
-    padding: 1.25rem 0; border-bottom: 0.5px solid var(--dark-border);
-    cursor: pointer; display: flex; align-items: baseline;
-    justify-content: space-between; gap: 1rem; transition: opacity .2s;
-  }
-  .article-item:hover { opacity: 0.65; }
-  .article-item:first-of-type { border-top: 0.5px solid var(--dark-border); }
-  .article-title { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--text-primary); line-height: 1.35; }
-  .article-era { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
-  .empty-state { text-align: center; padding: 4rem 0; color: var(--text-muted); font-size: 14px; }
+/* ─── HOME: CINEMATIC GRID ─── */
+.cinematic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px;padding:2px;min-height:60vh}
+.cin-card{position:relative;height:380px;overflow:hidden;cursor:pointer;background:var(--dark-surface)}
+.cin-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,filter .4s ease;filter:brightness(0.55) saturate(0.8)}
+.cin-card:hover img{transform:scale(1.04);filter:brightness(0.35) saturate(0.6)}
+.cin-card-no-img{width:100%;height:100%;background:linear-gradient(135deg,#1a1510 0%,#0f0d0a 100%);display:flex;align-items:center;justify-content:center}
+.cin-card-no-img i{font-size:48px;color:var(--text-muted)}
+.cin-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.2) 50%,transparent 100%);transition:background .4s}
+.cin-card:hover .cin-overlay{background:linear-gradient(to top,rgba(0,0,0,0.95) 0%,rgba(0,0,0,0.5) 60%,rgba(0,0,0,0.1) 100%)}
+.cin-content{position:absolute;bottom:0;left:0;right:0;padding:1.75rem 1.5rem}
+.cin-era{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;opacity:0.9}
+.cin-title{font-family:'Playfair Display',serif;font-size:21px;line-height:1.3;color:#fff;font-weight:600}
+.cin-excerpt{font-size:13px;color:rgba(240,237,228,0.7);margin-top:0.6rem;line-height:1.6;font-weight:300;max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .4s;opacity:0}
+.cin-card:hover .cin-excerpt{max-height:80px;opacity:1}
+.cin-date{font-size:11px;color:var(--text-muted);margin-top:0.75rem;display:flex;align-items:center;gap:5px}
 
-  /* ARTICLE PAGE */
-  .article-page { max-width: 680px; margin: 0 auto; padding: 3rem 2rem; }
-  .back-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    color: var(--text-muted); font-size: 13px; cursor: pointer;
-    background: none; border: none; font-family: 'Inter', sans-serif;
-    margin-bottom: 2.5rem; transition: color .2s;
-  }
-  .back-btn:hover { color: var(--gold); }
-  .article-page-era { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
-  .article-page-title { font-family: 'Playfair Display', serif; font-size: 36px; line-height: 1.2; margin-bottom: 1rem; }
-  .article-page-date { font-size: 12px; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 0.5px solid var(--dark-border); }
-  .article-page-body { font-size: 16px; line-height: 1.8; color: var(--text-secondary); font-weight: 300; white-space: pre-wrap; }
+.empty-home{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 2rem;text-align:center;gap:1rem}
+.empty-home i{font-size:40px;color:var(--text-muted)}
+.empty-home p{color:var(--text-muted);font-size:14px;line-height:1.7}
+.empty-home strong{color:var(--gold);font-weight:400;font-family:'Playfair Display',serif}
 
-  /* SEARCH */
-  .search-page { max-width: 640px; margin: 0 auto; padding: 3rem 2rem; }
-  .search-box {
-    width: 100%; background: var(--dark-surface); border: 0.5px solid var(--dark-border);
-    color: var(--text-primary); padding: 12px 16px; font-size: 15px;
-    font-family: 'Inter', sans-serif; outline: none; margin-bottom: 2rem;
-  }
-  .search-box:focus { border-color: var(--gold-dim); }
-  .search-box::placeholder { color: var(--text-muted); }
+/* ─── ARTICLE VIEW ─── */
+.article-hero{position:relative;height:420px;overflow:hidden}
+.article-hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.45)}
+.article-hero-no-img{height:200px;background:var(--dark-surface);border-bottom:0.5px solid var(--dark-border)}
+.article-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--dark-bg) 0%,transparent 60%)}
+.article-hero-content{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:760px;padding:0 2rem 2.5rem}
+.article-hero-era{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem}
+.article-hero-title{font-family:'Playfair Display',serif;font-size:42px;line-height:1.15;color:#fff;font-weight:700}
+.article-hero-date{font-size:12px;color:rgba(255,255,255,0.4);margin-top:0.75rem}
+.article-body-wrap{max-width:760px;margin:0 auto;padding:2.5rem 2rem 5rem}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);font-size:12px;cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;margin-bottom:2rem;transition:color .2s;letter-spacing:0.04em;text-transform:uppercase}
+.back-btn:hover{color:var(--gold)}
+.article-body-content{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.85;color:rgba(240,237,228,0.85);font-weight:300}
+.article-body-content h1,.article-body-content h2,.article-body-content h3{font-family:'Playfair Display',serif;color:var(--text-primary);font-weight:600;margin:2rem 0 0.75rem}
+.article-body-content h1{font-size:32px}
+.article-body-content h2{font-size:26px}
+.article-body-content h3{font-size:21px}
+.article-body-content p{margin-bottom:1.25rem}
+.article-body-content strong{color:var(--gold-light);font-weight:600}
+.article-body-content em{font-style:italic;color:rgba(240,237,228,0.7)}
+.article-body-content ul,.article-body-content ol{padding-left:1.5rem;margin-bottom:1.25rem}
+.article-body-content li{margin-bottom:0.4rem}
+.article-body-content blockquote{border-left:2px solid var(--gold);padding:0.75rem 1.5rem;margin:1.5rem 0;color:var(--text-secondary);font-style:italic}
+.article-body-content img{max-width:100%;margin:1.5rem 0;border:0.5px solid var(--dark-border)}
+.article-body-content hr{border:none;border-top:0.5px solid var(--dark-border);margin:2rem 0}
 
-  /* ADMIN OVERLAY */
-  #admin-unlock {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85); z-index: 100;
-    align-items: center; justify-content: center; flex-direction: column; gap: 12px;
-  }
-  #admin-unlock.visible { display: flex; }
-  .unlock-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-  .unlock-dots { display: flex; gap: 8px; }
-  .unlock-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    border: 0.5px solid var(--dark-border); background: var(--dark-card);
-    transition: background .2s;
-  }
-  .unlock-dot.active { background: var(--gold); border-color: var(--gold); }
+/* ─── SEARCH ─── */
+.search-page{max-width:680px;margin:0 auto;padding:3rem 2rem}
+.search-wrap{position:relative;margin-bottom:2.5rem}
+.search-wrap i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:16px}
+.search-box{width:100%;background:var(--dark-surface);border:0.5px solid var(--dark-border);color:var(--text-primary);padding:12px 14px 12px 40px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.search-box:focus{border-color:var(--gold-dim)}
+.search-box::placeholder{color:var(--text-muted)}
+.result-item{padding:1.1rem 0;border-bottom:0.5px solid var(--dark-border);cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:1rem;transition:opacity .2s}
+.result-item:hover{opacity:0.65}
+.result-item:first-of-type{border-top:0.5px solid var(--dark-border)}
+.result-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--text-primary)}
+.result-era{font-size:11px;color:var(--text-muted);white-space:nowrap}
 
-  /* ADMIN PANEL */
-  .admin-page { max-width: 720px; margin: 0 auto; padding: 3rem 2rem; }
-  .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; }
-  .admin-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gold); }
-  .admin-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+/* ─── ADMIN ─── */
+.admin-wrap{max-width:820px;margin:0 auto;padding:3rem 2rem 6rem}
+.admin-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2.5rem;gap:1rem}
+.admin-heading{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold)}
+.admin-sub{font-size:13px;color:var(--text-muted);margin-top:5px}
 
-  .form-group { margin-bottom: 1.25rem; }
-  .form-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px; }
-  .form-input, .form-textarea {
-    width: 100%; background: var(--dark-surface); border: 0.5px solid var(--dark-border);
-    color: var(--text-primary); padding: 10px 14px; font-size: 14px;
-    font-family: 'Inter', sans-serif; outline: none; resize: vertical;
-    transition: border-color .2s;
-  }
-  .form-input:focus, .form-textarea:focus { border-color: var(--gold-dim); }
-  .form-textarea { min-height: 180px; line-height: 1.7; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+/* Rich editor toolbar */
+.editor-wrap{border:0.5px solid var(--dark-border);background:var(--dark-surface);transition:border-color .2s}
+.editor-wrap:focus-within{border-color:var(--gold-dim)}
+.editor-toolbar{display:flex;flex-wrap:wrap;gap:2px;padding:8px;border-bottom:0.5px solid var(--dark-border);background:var(--dark-card)}
+.tb-btn{background:none;border:none;color:var(--text-muted);padding:5px 8px;cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;border-radius:2px;transition:background .15s,color .15s;display:flex;align-items:center;gap:4px}
+.tb-btn:hover{background:var(--dark-border);color:var(--text-primary)}
+.tb-btn i{font-size:15px}
+.tb-sep{width:0.5px;background:var(--dark-border);margin:4px 4px;align-self:stretch}
+.editor-area{min-height:260px;padding:1rem 1.25rem;outline:none;font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.8;color:var(--text-primary);caret-color:var(--gold)}
+.editor-area:empty:before{content:attr(data-placeholder);color:var(--text-muted);pointer-events:none}
+.editor-area h1,.editor-area h2,.editor-area h3{font-family:'Playfair Display',serif;color:var(--text-primary)}
+.editor-area blockquote{border-left:2px solid var(--gold);padding:0.5rem 1rem;color:var(--text-secondary);font-style:italic;margin:0.75rem 0}
+.editor-area img{max-width:100%;margin:0.5rem 0}
+.editor-area strong{color:var(--gold-light)}
 
-  .btn-gold {
-    background: var(--gold); color: #0D0D0D; border: none;
-    padding: 10px 24px; font-size: 13px; font-weight: 500;
-    font-family: 'Inter', sans-serif; cursor: pointer; letter-spacing: 0.04em;
-    transition: opacity .2s;
-  }
-  .btn-gold:hover { opacity: 0.85; }
-  .btn-ghost {
-    background: transparent; color: var(--text-muted); border: 0.5px solid var(--dark-border);
-    padding: 10px 20px; font-size: 13px; font-family: 'Inter', sans-serif;
-    cursor: pointer; transition: color .2s, border-color .2s;
-  }
-  .btn-ghost:hover { color: var(--gold); border-color: var(--gold-dim); }
+.form-group{margin-bottom:1.25rem}
+.form-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:7px}
+.form-input{width:100%;background:var(--dark-surface);border:0.5px solid var(--dark-border);color:var(--text-primary);padding:10px 14px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--gold-dim)}
+.form-input::placeholder{color:var(--text-muted)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 
-  .admin-list { margin-top: 3rem; }
-  .admin-list-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
-  .admin-article-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 0; border-bottom: 0.5px solid var(--dark-border); gap: 1rem;
-  }
-  .admin-article-row:first-of-type { border-top: 0.5px solid var(--dark-border); }
-  .admin-article-info { flex: 1; }
-  .admin-article-title { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--text-primary); }
-  .admin-article-meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-  .admin-actions { display: flex; gap: 8px; }
-  .btn-icon {
-    background: none; border: 0.5px solid var(--dark-border); color: var(--text-muted);
-    width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center;
-    justify-content: center; font-size: 14px; transition: color .2s, border-color .2s;
-  }
-  .btn-icon:hover { color: var(--gold); border-color: var(--gold-dim); }
-  .btn-icon.danger:hover { color: #E24B4A; border-color: #E24B4A; }
+/* Image upload */
+.img-upload-area{border:0.5px dashed var(--dark-border);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+.img-upload-area:hover{border-color:var(--gold-dim);background:rgba(201,168,76,0.03)}
+.img-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.img-preview{width:100%;max-height:200px;object-fit:cover;margin-top:1rem;display:none}
+.img-upload-label{font-size:13px;color:var(--text-muted);display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.img-upload-label i{font-size:28px;color:var(--gold-dim)}
+.img-upload-label span{font-size:11px;color:var(--text-muted)}
 
-  .toast {
-    position: fixed; bottom: 2rem; right: 2rem;
-    background: var(--dark-card); border: 0.5px solid var(--gold-dim);
-    color: var(--gold-light); padding: 12px 20px; font-size: 13px;
-    opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s;
-    pointer-events: none; z-index: 200;
-  }
-  .toast.show { opacity: 1; transform: translateY(0); }
+.btn-gold{background:var(--gold);color:#0D0D0D;border:none;padding:10px 22px;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.05em;transition:opacity .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold:hover{opacity:0.85}
+.btn-ghost{background:transparent;color:var(--text-muted);border:0.5px solid var(--dark-border);padding:10px 18px;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;transition:color .2s,border-color .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold-dim)}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:1.5rem}
 
-  /* Combo hint */
-  .combo-hint {
-    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em;
-    opacity: 0; transition: opacity 1s;
-    pointer-events: none;
-  }
-  .combo-hint.show { opacity: 1; }
+.admin-divider{height:0.5px;background:var(--dark-border);margin:2.5rem 0}
+.admin-list-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+.admin-row{display:flex;align-items:center;gap:1rem;padding:1rem 0;border-bottom:0.5px solid var(--dark-border)}
+.admin-row:first-of-type{border-top:0.5px solid var(--dark-border)}
+.admin-thumb{width:64px;height:48px;object-fit:cover;flex-shrink:0;background:var(--dark-card);border:0.5px solid var(--dark-border);display:flex;align-items:center;justify-content:center}
+.admin-thumb img{width:64px;height:48px;object-fit:cover}
+.admin-thumb i{font-size:18px;color:var(--text-muted)}
+.admin-row-info{flex:1;min-width:0}
+.admin-row-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-row-meta{font-size:11px;color:var(--text-muted);margin-top:3px}
+.admin-row-actions{display:flex;gap:6px;flex-shrink:0}
+.btn-icon{background:none;border:0.5px solid var(--dark-border);color:var(--text-muted);width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:color .2s,border-color .2s}
+.btn-icon:hover{color:var(--gold);border-color:var(--gold-dim)}
+.btn-icon.danger:hover{color:#E24B4A;border-color:#A32D2D}
+
+/* UNLOCK OVERLAY */
+#admin-unlock{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+#admin-unlock.visible{display:flex}
+.unlock-title{font-family:'Playfair Display',serif;font-size:14px;color:var(--text-muted);letter-spacing:0.1em}
+.unlock-dots{display:flex;gap:10px}
+.unlock-dot{width:12px;height:12px;border-radius:50%;border:0.5px solid var(--dark-border);background:var(--dark-card);transition:background .2s,border-color .2s}
+.unlock-dot.active{background:var(--gold);border-color:var(--gold)}
+.unlock-keys{display:flex;gap:6px;margin-top:4px}
+.unlock-key{font-size:16px;color:var(--text-muted);width:32px;height:32px;border:0.5px solid var(--dark-border);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;transition:color .2s,border-color .2s}
+.unlock-key.done{color:var(--gold);border-color:var(--gold-dim)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark-card);border:0.5px solid var(--gold-dim);color:var(--gold-light);padding:11px 20px;font-size:13px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s;pointer-events:none;z-index:200;max-width:280px}
+.toast.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
@@ -191,288 +181,364 @@
 
 <!-- HOME -->
 <div id="page-home" class="page active">
-  <div class="content">
-    <div class="section-label">Articole recomandate</div>
-    <div id="articles-list"></div>
-  </div>
+  <div id="home-grid"></div>
 </div>
 
-<!-- ARTICLE VIEW -->
+<!-- ARTICLE -->
 <div id="page-article" class="page">
-  <div class="article-page">
+  <div id="article-hero-zone"></div>
+  <div class="article-body-wrap">
     <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i> Înapoi</button>
-    <div id="article-era" class="article-page-era"></div>
-    <h1 id="article-title" class="article-page-title"></h1>
-    <div id="article-date" class="article-page-date"></div>
-    <div id="article-body" class="article-page-body"></div>
+    <div id="article-body-content" class="article-body-content"></div>
   </div>
 </div>
 
 <!-- SEARCH -->
 <div id="page-search" class="page">
   <div class="search-page">
-    <div class="section-label">Caută articole</div>
-    <input class="search-box" type="text" placeholder="Introdu un cuvânt cheie..." id="search-input" oninput="doSearch()">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input class="search-box" type="text" id="search-input" placeholder="Caută articole..." oninput="doSearch()">
+    </div>
     <div id="search-results"></div>
   </div>
 </div>
 
 <!-- ADMIN -->
 <div id="page-admin" class="page">
-  <div class="admin-page">
-    <div class="admin-header">
+  <div class="admin-wrap">
+    <div class="admin-top">
       <div>
-        <div class="admin-title">Panou de administrare</div>
-        <div class="admin-subtitle">Gestionează articolele blogului</div>
+        <div class="admin-heading">Panou de administrare</div>
+        <div class="admin-sub" id="admin-mode-label">Articol nou</div>
       </div>
       <button class="btn-ghost" onclick="showPage('home')"><i class="ti ti-x"></i> Ieși</button>
     </div>
 
-    <div id="edit-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Titlu articol</label>
-          <input class="form-input" id="f-title" type="text" placeholder="ex: Bătălia de la...">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Epocă · Categorie</label>
-          <input class="form-input" id="f-era" type="text" placeholder="ex: Roma · Antichitate">
-        </div>
+    <!-- Form -->
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Titlu articol</label>
+        <input class="form-input" id="f-title" type="text" placeholder="ex: Bătălia de la Thermopile">
       </div>
       <div class="form-group">
-        <label class="form-label">Conținut articol</label>
-        <textarea class="form-textarea" id="f-body" placeholder="Scrie conținutul articolului aici..."></textarea>
-      </div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <button class="btn-gold" onclick="saveArticle()"><i class="ti ti-check"></i> Salvează articolul</button>
-        <button class="btn-ghost" id="cancel-edit-btn" onclick="cancelEdit()" style="display:none;">Anulează editarea</button>
+        <label class="form-label">Epocă · Categorie</label>
+        <input class="form-input" id="f-era" type="text" placeholder="ex: Grecia · Antichitate">
       </div>
     </div>
 
-    <div class="admin-list">
-      <div class="admin-list-label">Articole existente</div>
-      <div id="admin-articles-list"></div>
+    <div class="form-group">
+      <label class="form-label">Imagine de copertă</label>
+      <div class="img-upload-area" id="upload-area">
+        <input type="file" accept="image/*" id="img-file-input" onchange="handleImageUpload(event)">
+        <div class="img-upload-label">
+          <i class="ti ti-photo-up"></i>
+          <strong style="color:var(--text-secondary);font-weight:400">Apasă sau trage o imagine aici</strong>
+          <span>JPG, PNG, WEBP — max 5MB</span>
+        </div>
+        <img id="img-preview" class="img-preview">
+      </div>
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+        <span id="img-name" style="font-size:12px;color:var(--text-muted);flex:1"></span>
+        <button class="btn-ghost" id="remove-img-btn" onclick="removeImage()" style="display:none;padding:5px 12px;font-size:12px"><i class="ti ti-x"></i> Elimină</button>
+      </div>
     </div>
+
+    <div class="form-group">
+      <label class="form-label">Conținut articol</label>
+      <div class="editor-wrap">
+        <div class="editor-toolbar">
+          <button class="tb-btn" onclick="fmt('bold')" title="Bold"><i class="ti ti-bold"></i></button>
+          <button class="tb-btn" onclick="fmt('italic')" title="Italic"><i class="ti ti-italic"></i></button>
+          <button class="tb-btn" onclick="fmt('underline')" title="Subliniat"><i class="ti ti-underline"></i></button>
+          <div class="tb-sep"></div>
+          <button class="tb-btn" onclick="fmtBlock('h2')" title="Titlu mare">H1</button>
+          <button class="tb-btn" onclick="fmtBlock('h3')" title="Titlu mic">H2</button>
+          <button class="tb-btn" onclick="fmtBlock('p')" title="Paragraf normal"><i class="ti ti-pilcrow"></i></button>
+          <div class="tb-sep"></div>
+          <button class="tb-btn" onclick="fmt('insertUnorderedList')" title="Listă"><i class="ti ti-list"></i></button>
+          <button class="tb-btn" onclick="fmt('insertOrderedList')" title="Listă numerotată"><i class="ti ti-list-numbers"></i></button>
+          <button class="tb-btn" onclick="fmtBlock('blockquote')" title="Citat"><i class="ti ti-quote"></i></button>
+          <div class="tb-sep"></div>
+          <button class="tb-btn" onclick="insertHr()" title="Linie separatoare"><i class="ti ti-minus"></i></button>
+          <button class="tb-btn" onclick="triggerInlineImg()" title="Inserează imagine în text"><i class="ti ti-photo"></i></button>
+          <div class="tb-sep"></div>
+          <button class="tb-btn" onclick="fmt('removeFormat')" title="Elimină formatare"><i class="ti ti-clear-formatting"></i></button>
+        </div>
+        <div class="editor-area" id="editor" contenteditable="true" data-placeholder="Scrie conținutul articolului aici..."></div>
+      </div>
+      <input type="file" id="inline-img-input" accept="image/*" style="display:none" onchange="insertInlineImage(event)">
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-gold" onclick="saveArticle()"><i class="ti ti-check"></i> Salvează articolul</button>
+      <button class="btn-ghost" id="cancel-btn" onclick="cancelEdit()" style="display:none"><i class="ti ti-x"></i> Anulează editarea</button>
+    </div>
+
+    <div class="admin-divider"></div>
+    <div class="admin-list-label">Articole existente</div>
+    <div id="admin-list"></div>
   </div>
 </div>
 
-<!-- ADMIN UNLOCK OVERLAY -->
+<!-- UNLOCK OVERLAY -->
 <div id="admin-unlock">
-  <div class="unlock-label">Combinație secretă</div>
+  <div class="unlock-title">Combinație secretă</div>
+  <div class="unlock-keys" id="unlock-keys">
+    <div class="unlock-key">↑</div><div class="unlock-key">↑</div>
+    <div class="unlock-key">↓</div><div class="unlock-key">↓</div>
+    <div class="unlock-key">←</div><div class="unlock-key">→</div>
+    <div class="unlock-key">←</div><div class="unlock-key">→</div>
+  </div>
   <div class="unlock-dots" id="unlock-dots"></div>
 </div>
 
 <div class="toast" id="toast"></div>
-<div class="combo-hint" id="combo-hint">↑ ↑ ↓ ↓ ← → ← →</div>
 
 <script>
-  // ── Storage ──────────────────────────────────────────────
-  function getArticles() {
-    try { return JSON.parse(localStorage.getItem('dacebalo_articles') || '[]'); }
-    catch(e) { return []; }
-  }
-  function saveArticles(arr) {
-    localStorage.setItem('dacebalo_articles', JSON.stringify(arr));
-  }
+// ── Storage ──────────────────────────────────────────────────
+function getArticles(){try{return JSON.parse(localStorage.getItem('dacebalo_v2')||'[]')}catch(e){return[]}}
+function saveArticles(a){localStorage.setItem('dacebalo_v2',JSON.stringify(a))}
 
-  // ── Pages ─────────────────────────────────────────────────
-  function showPage(name) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
-    if (name === 'home') renderHome();
-    if (name === 'admin') renderAdmin();
-    if (name === 'search') { document.getElementById('search-input').value = ''; document.getElementById('search-results').innerHTML = ''; }
-    window.scrollTo(0,0);
-  }
+// ── Pages ────────────────────────────────────────────────────
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(name==='home')renderHome();
+  if(name==='admin')renderAdmin();
+  if(name==='search'){document.getElementById('search-input').value='';document.getElementById('search-results').innerHTML=''}
+  window.scrollTo(0,0);
+}
 
-  // ── Render home ───────────────────────────────────────────
-  function renderHome() {
-    const articles = getArticles();
-    const list = document.getElementById('articles-list');
-    if (!articles.length) {
-      list.innerHTML = '<div class="empty-state">Niciun articol încă. Adaugă primul din panoul de admin.</div>';
-      return;
-    }
-    list.innerHTML = articles.map((a, i) => `
-      <div class="article-item" onclick="openArticle(${i})">
-        <div class="article-title">${escHtml(a.title)}</div>
-        <div class="article-era">${escHtml(a.era)}</div>
+// ── Home cinematic ───────────────────────────────────────────
+function renderHome(){
+  const arts=getArticles();
+  const grid=document.getElementById('home-grid');
+  if(!arts.length){
+    grid.innerHTML=`<div class="empty-home"><i class="ti ti-building-castle"></i><p>Niciun articol încă.<br>Apasă <strong>↑ ↑ ↓ ↓ ← → ← →</strong> pentru a deschide panoul de admin.</p></div>`;
+    return;
+  }
+  grid.innerHTML=`<div class="cinematic-grid">${arts.map((a,i)=>{
+    const imgHtml=a.coverBase64
+      ?`<img src="${a.coverBase64}" alt="${escHtml(a.title)}">`
+      :`<div class="cin-card-no-img"><i class="ti ti-building-monument"></i></div>`;
+    const excerpt=a.bodyHtml?stripHtml(a.bodyHtml).substring(0,120)+(stripHtml(a.bodyHtml).length>120?'…':''):'';
+    return `<div class="cin-card" onclick="openArticle(${i})">
+      ${imgHtml}
+      <div class="cin-overlay"></div>
+      <div class="cin-content">
+        <div class="cin-era">${escHtml(a.era||'')}</div>
+        <div class="cin-title">${escHtml(a.title)}</div>
+        ${excerpt?`<div class="cin-excerpt">${escHtml(excerpt)}</div>`:''}
+        <div class="cin-date"><i class="ti ti-calendar" style="font-size:11px"></i>${a.date||''}</div>
       </div>
-    `).join('');
+    </div>`;
+  }).join('')}</div>`;
+}
+
+// ── Article ──────────────────────────────────────────────────
+function openArticle(i){
+  const a=getArticles()[i];
+  if(!a)return;
+  const hz=document.getElementById('article-hero-zone');
+  if(a.coverBase64){
+    hz.innerHTML=`<div class="article-hero"><img src="${a.coverBase64}" alt="${escHtml(a.title)}"><div class="article-hero-overlay"></div><div class="article-hero-content"><div class="article-hero-era">${escHtml(a.era||'')}</div><h1 class="article-hero-title">${escHtml(a.title)}</h1><div class="article-hero-date">${a.date||''}</div></div></div>`;
+  } else {
+    hz.innerHTML=`<div class="article-hero-no-img"></div>`;
   }
+  document.getElementById('article-body-content').innerHTML=a.bodyHtml||'';
+  showPage('article');
+}
 
-  // ── Open article ──────────────────────────────────────────
-  function openArticle(index) {
-    const a = getArticles()[index];
-    if (!a) return;
-    document.getElementById('article-era').textContent = a.era;
-    document.getElementById('article-title').textContent = a.title;
-    document.getElementById('article-date').textContent = a.date || '';
-    document.getElementById('article-body').textContent = a.body;
-    showPage('article');
+// ── Search ───────────────────────────────────────────────────
+function doSearch(){
+  const q=document.getElementById('search-input').value.toLowerCase().trim();
+  const res=document.getElementById('search-results');
+  if(!q){res.innerHTML='';return}
+  const arts=getArticles();
+  const found=arts.map((a,i)=>({a,i})).filter(({a})=>
+    a.title.toLowerCase().includes(q)||(a.era||'').toLowerCase().includes(q)||stripHtml(a.bodyHtml||'').toLowerCase().includes(q)
+  );
+  if(!found.length){res.innerHTML='<div style="color:var(--text-muted);font-size:14px;padding:2rem 0">Niciun rezultat.</div>';return}
+  res.innerHTML=found.map(({a,i})=>`<div class="result-item" onclick="openArticle(${i})"><div class="result-title">${escHtml(a.title)}</div><div class="result-era">${escHtml(a.era||'')}</div></div>`).join('');
+}
+
+// ── Admin ────────────────────────────────────────────────────
+let editIdx=-1;
+let currentImgBase64=null;
+
+function renderAdmin(){
+  const arts=getArticles();
+  const list=document.getElementById('admin-list');
+  if(!arts.length){list.innerHTML='<div style="color:var(--text-muted);font-size:14px;padding:2rem 0">Niciun articol încă.</div>';return}
+  list.innerHTML=arts.map((a,i)=>{
+    const thumbHtml=a.coverBase64
+      ?`<div class="admin-thumb"><img src="${a.coverBase64}"></div>`
+      :`<div class="admin-thumb"><i class="ti ti-photo-off"></i></div>`;
+    return `<div class="admin-row">${thumbHtml}<div class="admin-row-info"><div class="admin-row-title">${escHtml(a.title)}</div><div class="admin-row-meta">${escHtml(a.era||'')} · ${a.date||'fără dată'}</div></div><div class="admin-row-actions"><button class="btn-icon" onclick="editArticle(${i})" title="Editează"><i class="ti ti-edit"></i></button><button class="btn-icon danger" onclick="deleteArticle(${i})" title="Șterge"><i class="ti ti-trash"></i></button></div></div>`;
+  }).join('');
+}
+
+function editArticle(i){
+  const a=getArticles()[i];
+  document.getElementById('f-title').value=a.title;
+  document.getElementById('f-era').value=a.era||'';
+  document.getElementById('editor').innerHTML=a.bodyHtml||'';
+  currentImgBase64=a.coverBase64||null;
+  if(currentImgBase64){
+    document.getElementById('img-preview').src=currentImgBase64;
+    document.getElementById('img-preview').style.display='block';
+    document.getElementById('img-name').textContent='Imagine existentă';
+    document.getElementById('remove-img-btn').style.display='inline-flex';
   }
+  editIdx=i;
+  document.getElementById('cancel-btn').style.display='inline-flex';
+  document.getElementById('admin-mode-label').textContent='Editare articol';
+  window.scrollTo(0,0);
+}
 
-  // ── Search ────────────────────────────────────────────────
-  function doSearch() {
-    const q = document.getElementById('search-input').value.toLowerCase().trim();
-    const results = document.getElementById('search-results');
-    if (!q) { results.innerHTML = ''; return; }
-    const articles = getArticles();
-    const found = articles.filter((a, i) => {
-      return a.title.toLowerCase().includes(q) || (a.body||'').toLowerCase().includes(q) || (a.era||'').toLowerCase().includes(q);
-    });
-    if (!found.length) { results.innerHTML = '<div class="empty-state">Niciun rezultat găsit.</div>'; return; }
-    const allArticles = getArticles();
-    results.innerHTML = found.map(a => {
-      const i = allArticles.indexOf(a);
-      return `<div class="article-item" onclick="openArticle(${i})">
-        <div class="article-title">${escHtml(a.title)}</div>
-        <div class="article-era">${escHtml(a.era)}</div>
-      </div>`;
-    }).join('');
+function cancelEdit(){
+  clearForm();
+}
+
+function clearForm(){
+  document.getElementById('f-title').value='';
+  document.getElementById('f-era').value='';
+  document.getElementById('editor').innerHTML='';
+  removeImage();
+  editIdx=-1;
+  document.getElementById('cancel-btn').style.display='none';
+  document.getElementById('admin-mode-label').textContent='Articol nou';
+}
+
+function saveArticle(){
+  const title=document.getElementById('f-title').value.trim();
+  const era=document.getElementById('f-era').value.trim();
+  const bodyHtml=document.getElementById('editor').innerHTML.trim();
+  if(!title){showToast('Adaugă un titlu!');return}
+  const arts=getArticles();
+  const now=new Date().toLocaleDateString('ro-RO',{day:'numeric',month:'long',year:'numeric'});
+  if(editIdx>=0){
+    arts[editIdx]={...arts[editIdx],title,era,bodyHtml,coverBase64:currentImgBase64};
+    showToast('Articol actualizat!');
+  } else {
+    arts.unshift({title,era,bodyHtml,coverBase64:currentImgBase64,date:now});
+    showToast('Articol adăugat!');
   }
+  saveArticles(arts);
+  clearForm();
+  renderAdmin();
+}
 
-  // ── Admin render ──────────────────────────────────────────
-  let editingIndex = -1;
+function deleteArticle(i){
+  if(!confirm('Ștergi acest articol definitiv?'))return;
+  const arts=getArticles();
+  arts.splice(i,1);
+  saveArticles(arts);
+  showToast('Articol șters.');
+  renderAdmin();
+}
 
-  function renderAdmin() {
-    const articles = getArticles();
-    const list = document.getElementById('admin-articles-list');
-    if (!articles.length) {
-      list.innerHTML = '<div class="empty-state">Niciun articol încă.</div>';
-      return;
-    }
-    list.innerHTML = articles.map((a, i) => `
-      <div class="admin-article-row">
-        <div class="admin-article-info">
-          <div class="admin-article-title">${escHtml(a.title)}</div>
-          <div class="admin-article-meta">${escHtml(a.era)} · ${a.date || 'fără dată'}</div>
-        </div>
-        <div class="admin-actions">
-          <button class="btn-icon" onclick="editArticle(${i})" title="Editează"><i class="ti ti-edit"></i></button>
-          <button class="btn-icon danger" onclick="deleteArticle(${i})" title="Șterge"><i class="ti ti-trash"></i></button>
-        </div>
-      </div>
-    `).join('');
+// ── Image upload ──────────────────────────────────────────────
+function handleImageUpload(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  if(file.size>5*1024*1024){showToast('Imaginea e prea mare (max 5MB)');return}
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    currentImgBase64=ev.target.result;
+    document.getElementById('img-preview').src=currentImgBase64;
+    document.getElementById('img-preview').style.display='block';
+    document.getElementById('img-name').textContent=file.name;
+    document.getElementById('remove-img-btn').style.display='inline-flex';
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeImage(){
+  currentImgBase64=null;
+  document.getElementById('img-preview').style.display='none';
+  document.getElementById('img-preview').src='';
+  document.getElementById('img-name').textContent='';
+  document.getElementById('remove-img-btn').style.display='none';
+  document.getElementById('img-file-input').value='';
+}
+
+// ── Inline image in editor ────────────────────────────────────
+function triggerInlineImg(){document.getElementById('inline-img-input').click()}
+function insertInlineImage(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    document.getElementById('editor').focus();
+    document.execCommand('insertHTML',false,`<img src="${ev.target.result}" style="max-width:100%;margin:0.75rem 0">`);
+  };
+  reader.readAsDataURL(file);
+  e.target.value='';
+}
+
+// ── Editor commands ───────────────────────────────────────────
+function fmt(cmd){document.getElementById('editor').focus();document.execCommand(cmd,false,null)}
+function fmtBlock(tag){document.getElementById('editor').focus();document.execCommand('formatBlock',false,tag)}
+function insertHr(){document.getElementById('editor').focus();document.execCommand('insertHTML',false,'<hr>')}
+
+// ── Secret combo ↑↑↓↓←→←→ ────────────────────────────────────
+const SECRET=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight'];
+let combo=[];
+let comboTimer=null;
+
+document.addEventListener('keydown',e=>{
+  if(!SECRET.includes(e.key)){
+    // only reset if not inside text input
+    if(document.activeElement.tagName==='INPUT'||document.activeElement.contentEditable==='true')return;
+    combo=[];
+    document.getElementById('admin-unlock').classList.remove('visible');
+    return;
   }
-
-  function saveArticle() {
-    const title = document.getElementById('f-title').value.trim();
-    const era   = document.getElementById('f-era').value.trim();
-    const body  = document.getElementById('f-body').value.trim();
-    if (!title) { showToast('Adaugă un titlu!'); return; }
-    const articles = getArticles();
-    const now = new Date().toLocaleDateString('ro-RO', { day:'numeric', month:'long', year:'numeric' });
-    if (editingIndex >= 0) {
-      articles[editingIndex] = { ...articles[editingIndex], title, era, body };
-      showToast('Articol actualizat!');
+  if(document.activeElement.tagName==='INPUT'||document.activeElement.contentEditable==='true')return;
+  if(combo.length===0)document.getElementById('admin-unlock').classList.add('visible');
+  if(e.key===SECRET[combo.length]){
+    combo.push(e.key);
+    updateUnlockUI();
+    clearTimeout(comboTimer);
+    if(combo.length===SECRET.length){
+      setTimeout(()=>{
+        document.getElementById('admin-unlock').classList.remove('visible');
+        combo=[];
+        resetUnlockUI();
+        showPage('admin');
+      },350);
     } else {
-      articles.unshift({ title, era, body, date: now });
-      showToast('Articol adăugat!');
+      comboTimer=setTimeout(()=>{combo=[];resetUnlockUI();document.getElementById('admin-unlock').classList.remove('visible');},3500);
     }
-    saveArticles(articles);
-    clearForm();
-    renderAdmin();
+  } else {
+    combo=[];
+    resetUnlockUI();
+    document.getElementById('admin-unlock').classList.remove('visible');
   }
+});
 
-  function editArticle(i) {
-    const a = getArticles()[i];
-    document.getElementById('f-title').value = a.title;
-    document.getElementById('f-era').value = a.era;
-    document.getElementById('f-body').value = a.body || '';
-    editingIndex = i;
-    document.getElementById('cancel-edit-btn').style.display = 'inline-flex';
-    window.scrollTo(0,0);
-  }
+function updateUnlockUI(){
+  document.querySelectorAll('#unlock-keys .unlock-key').forEach((k,i)=>k.classList.toggle('done',i<combo.length));
+}
+function resetUnlockUI(){
+  document.querySelectorAll('#unlock-keys .unlock-key').forEach(k=>k.classList.remove('done'));
+}
 
-  function cancelEdit() { clearForm(); }
+// ── Toast ─────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
 
-  function clearForm() {
-    document.getElementById('f-title').value = '';
-    document.getElementById('f-era').value = '';
-    document.getElementById('f-body').value = '';
-    editingIndex = -1;
-    document.getElementById('cancel-edit-btn').style.display = 'none';
-  }
+// ── Utils ─────────────────────────────────────────────────────
+function escHtml(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function stripHtml(s){const d=document.createElement('div');d.innerHTML=s;return d.textContent||''}
 
-  function deleteArticle(i) {
-    if (!confirm('Sigur vrei să ștergi acest articol?')) return;
-    const articles = getArticles();
-    articles.splice(i, 1);
-    saveArticles(articles);
-    showToast('Articol șters.');
-    renderAdmin();
-  }
-
-  // ── Toast ─────────────────────────────────────────────────
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
-
-  // ── Secret combo: ↑ ↑ ↓ ↓ ← → ← → ──────────────────────
-  const SECRET = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight'];
-  let comboProgress = [];
-  let unlockTimer = null;
-
-  function updateUnlockDots() {
-    const dots = document.getElementById('unlock-dots');
-    dots.innerHTML = SECRET.map((_, i) => `<div class="unlock-dot ${i < comboProgress.length ? 'active' : ''}"></div>`).join('');
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (!SECRET.includes(e.key)) {
-      comboProgress = [];
-      document.getElementById('admin-unlock').classList.remove('visible');
-      return;
-    }
-
-    // show overlay after first key
-    if (comboProgress.length === 0) {
-      document.getElementById('admin-unlock').classList.add('visible');
-    }
-
-    if (e.key === SECRET[comboProgress.length]) {
-      comboProgress.push(e.key);
-      updateUnlockDots();
-      clearTimeout(unlockTimer);
-
-      if (comboProgress.length === SECRET.length) {
-        setTimeout(() => {
-          document.getElementById('admin-unlock').classList.remove('visible');
-          comboProgress = [];
-          showPage('admin');
-        }, 400);
-      } else {
-        unlockTimer = setTimeout(() => {
-          comboProgress = [];
-          document.getElementById('admin-unlock').classList.remove('visible');
-        }, 3000);
-      }
-    } else {
-      comboProgress = [];
-      document.getElementById('admin-unlock').classList.remove('visible');
-    }
-  });
-
-  // Show combo hint on first visit
-  if (!localStorage.getItem('dacebalo_visited')) {
-    localStorage.setItem('dacebalo_visited', '1');
-    const hint = document.getElementById('combo-hint');
-    hint.classList.add('show');
-    setTimeout(() => hint.classList.remove('show'), 5000);
-  }
-
-  // ── Utils ─────────────────────────────────────────────────
-  function escHtml(str) {
-    if (!str) return '';
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  // ── Init ──────────────────────────────────────────────────
-  renderHome();
+// ── Init ──────────────────────────────────────────────────────
+renderHome();
 </script>
 </body>
 </html>
