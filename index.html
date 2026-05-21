@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dacebalohistory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-dim: #7A6530;
+    --dark-bg: #0D0D0D;
+    --dark-surface: #161616;
+    --dark-card: #1E1E1E;
+    --dark-border: #2E2E2E;
+    --text-primary: #F0EDE4;
+    --text-secondary: #9A9488;
+    --text-muted: #5A5650;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--dark-bg); color: var(--text-primary); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  /* NAV */
+  .nav {
+    background: var(--dark-bg);
+    border-bottom: 0.5px solid var(--dark-border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--gold);
+    letter-spacing: 0.03em; cursor: pointer; text-decoration: none;
+  }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: transparent; border: 0.5px solid var(--dark-border);
+    color: var(--text-secondary); padding: 6px 14px; border-radius: 20px;
+    font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .nav-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .nav-btn i { font-size: 14px; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HOME */
+  .content { max-width: 640px; margin: 0 auto; padding: 3rem 2rem; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2rem;
+  }
+  .article-item {
+    padding: 1.25rem 0; border-bottom: 0.5px solid var(--dark-border);
+    cursor: pointer; display: flex; align-items: baseline;
+    justify-content: space-between; gap: 1rem; transition: opacity .2s;
+  }
+  .article-item:hover { opacity: 0.65; }
+  .article-item:first-of-type { border-top: 0.5px solid var(--dark-border); }
+  .article-title { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--text-primary); line-height: 1.35; }
+  .article-era { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+  .empty-state { text-align: center; padding: 4rem 0; color: var(--text-muted); font-size: 14px; }
+
+  /* ARTICLE PAGE */
+  .article-page { max-width: 680px; margin: 0 auto; padding: 3rem 2rem; }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-muted); font-size: 13px; cursor: pointer;
+    background: none; border: none; font-family: 'Inter', sans-serif;
+    margin-bottom: 2.5rem; transition: color .2s;
+  }
+  .back-btn:hover { color: var(--gold); }
+  .article-page-era { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .article-page-title { font-family: 'Playfair Display', serif; font-size: 36px; line-height: 1.2; margin-bottom: 1rem; }
+  .article-page-date { font-size: 12px; color: var(--text-muted); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 0.5px solid var(--dark-border); }
+  .article-page-body { font-size: 16px; line-height: 1.8; color: var(--text-secondary); font-weight: 300; white-space: pre-wrap; }
+
+  /* SEARCH */
+  .search-page { max-width: 640px; margin: 0 auto; padding: 3rem 2rem; }
+  .search-box {
+    width: 100%; background: var(--dark-surface); border: 0.5px solid var(--dark-border);
+    color: var(--text-primary); padding: 12px 16px; font-size: 15px;
+    font-family: 'Inter', sans-serif; outline: none; margin-bottom: 2rem;
+  }
+  .search-box:focus { border-color: var(--gold-dim); }
+  .search-box::placeholder { color: var(--text-muted); }
+
+  /* ADMIN OVERLAY */
+  #admin-unlock {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); z-index: 100;
+    align-items: center; justify-content: center; flex-direction: column; gap: 12px;
+  }
+  #admin-unlock.visible { display: flex; }
+  .unlock-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .unlock-dots { display: flex; gap: 8px; }
+  .unlock-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 0.5px solid var(--dark-border); background: var(--dark-card);
+    transition: background .2s;
+  }
+  .unlock-dot.active { background: var(--gold); border-color: var(--gold); }
+
+  /* ADMIN PANEL */
+  .admin-page { max-width: 720px; margin: 0 auto; padding: 3rem 2rem; }
+  .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; }
+  .admin-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gold); }
+  .admin-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px; }
+  .form-input, .form-textarea {
+    width: 100%; background: var(--dark-surface); border: 0.5px solid var(--dark-border);
+    color: var(--text-primary); padding: 10px 14px; font-size: 14px;
+    font-family: 'Inter', sans-serif; outline: none; resize: vertical;
+    transition: border-color .2s;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold-dim); }
+  .form-textarea { min-height: 180px; line-height: 1.7; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .btn-gold {
+    background: var(--gold); color: #0D0D0D; border: none;
+    padding: 10px 24px; font-size: 13px; font-weight: 500;
+    font-family: 'Inter', sans-serif; cursor: pointer; letter-spacing: 0.04em;
+    transition: opacity .2s;
+  }
+  .btn-gold:hover { opacity: 0.85; }
+  .btn-ghost {
+    background: transparent; color: var(--text-muted); border: 0.5px solid var(--dark-border);
+    padding: 10px 20px; font-size: 13px; font-family: 'Inter', sans-serif;
+    cursor: pointer; transition: color .2s, border-color .2s;
+  }
+  .btn-ghost:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+  .admin-list { margin-top: 3rem; }
+  .admin-list-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .admin-article-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 0; border-bottom: 0.5px solid var(--dark-border); gap: 1rem;
+  }
+  .admin-article-row:first-of-type { border-top: 0.5px solid var(--dark-border); }
+  .admin-article-info { flex: 1; }
+  .admin-article-title { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--text-primary); }
+  .admin-article-meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .admin-actions { display: flex; gap: 8px; }
+  .btn-icon {
+    background: none; border: 0.5px solid var(--dark-border); color: var(--text-muted);
+    width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; font-size: 14px; transition: color .2s, border-color .2s;
+  }
+  .btn-icon:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .btn-icon.danger:hover { color: #E24B4A; border-color: #E24B4A; }
+
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem;
+    background: var(--dark-card); border: 0.5px solid var(--gold-dim);
+    color: var(--gold-light); padding: 12px 20px; font-size: 13px;
+    opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s;
+    pointer-events: none; z-index: 200;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Combo hint */
+  .combo-hint {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em;
+    opacity: 0; transition: opacity 1s;
+    pointer-events: none;
+  }
+  .combo-hint.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" onclick="showPage('home')">Dacebalohistory</a>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="showPage('home')"><i class="ti ti-home"></i> Acasă</button>
+    <button class="nav-btn" onclick="showPage('search')"><i class="ti ti-search"></i> Caută</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="content">
+    <div class="section-label">Articole recomandate</div>
+    <div id="articles-list"></div>
+  </div>
+</div>
+
+<!-- ARTICLE VIEW -->
+<div id="page-article" class="page">
+  <div class="article-page">
+    <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i> Înapoi</button>
+    <div id="article-era" class="article-page-era"></div>
+    <h1 id="article-title" class="article-page-title"></h1>
+    <div id="article-date" class="article-page-date"></div>
+    <div id="article-body" class="article-page-body"></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div id="page-search" class="page">
+  <div class="search-page">
+    <div class="section-label">Caută articole</div>
+    <input class="search-box" type="text" placeholder="Introdu un cuvânt cheie..." id="search-input" oninput="doSearch()">
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="page-admin" class="page">
+  <div class="admin-page">
+    <div class="admin-header">
+      <div>
+        <div class="admin-title">Panou de administrare</div>
+        <div class="admin-subtitle">Gestionează articolele blogului</div>
+      </div>
+      <button class="btn-ghost" onclick="showPage('home')"><i class="ti ti-x"></i> Ieși</button>
+    </div>
+
+    <div id="edit-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Titlu articol</label>
+          <input class="form-input" id="f-title" type="text" placeholder="ex: Bătălia de la...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Epocă · Categorie</label>
+          <input class="form-input" id="f-era" type="text" placeholder="ex: Roma · Antichitate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Conținut articol</label>
+        <textarea class="form-textarea" id="f-body" placeholder="Scrie conținutul articolului aici..."></textarea>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="btn-gold" onclick="saveArticle()"><i class="ti ti-check"></i> Salvează articolul</button>
+        <button class="btn-ghost" id="cancel-edit-btn" onclick="cancelEdit()" style="display:none;">Anulează editarea</button>
+      </div>
+    </div>
+
+    <div class="admin-list">
+      <div class="admin-list-label">Articole existente</div>
+      <div id="admin-articles-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN UNLOCK OVERLAY -->
+<div id="admin-unlock">
+  <div class="unlock-label">Combinație secretă</div>
+  <div class="unlock-dots" id="unlock-dots"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="combo-hint" id="combo-hint">↑ ↑ ↓ ↓ ← → ← →</div>
+
+<script>
+  // ── Storage ──────────────────────────────────────────────
+  function getArticles() {
+    try { return JSON.parse(localStorage.getItem('dacebalo_articles') || '[]'); }
+    catch(e) { return []; }
+  }
+  function saveArticles(arr) {
+    localStorage.setItem('dacebalo_articles', JSON.stringify(arr));
+  }
+
+  // ── Pages ─────────────────────────────────────────────────
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    if (name === 'home') renderHome();
+    if (name === 'admin') renderAdmin();
+    if (name === 'search') { document.getElementById('search-input').value = ''; document.getElementById('search-results').innerHTML = ''; }
+    window.scrollTo(0,0);
+  }
+
+  // ── Render home ───────────────────────────────────────────
+  function renderHome() {
+    const articles = getArticles();
+    const list = document.getElementById('articles-list');
+    if (!articles.length) {
+      list.innerHTML = '<div class="empty-state">Niciun articol încă. Adaugă primul din panoul de admin.</div>';
+      return;
+    }
+    list.innerHTML = articles.map((a, i) => `
+      <div class="article-item" onclick="openArticle(${i})">
+        <div class="article-title">${escHtml(a.title)}</div>
+        <div class="article-era">${escHtml(a.era)}</div>
+      </div>
+    `).join('');
+  }
+
+  // ── Open article ──────────────────────────────────────────
+  function openArticle(index) {
+    const a = getArticles()[index];
+    if (!a) return;
+    document.getElementById('article-era').textContent = a.era;
+    document.getElementById('article-title').textContent = a.title;
+    document.getElementById('article-date').textContent = a.date || '';
+    document.getElementById('article-body').textContent = a.body;
+    showPage('article');
+  }
+
+  // ── Search ────────────────────────────────────────────────
+  function doSearch() {
+    const q = document.getElementById('search-input').value.toLowerCase().trim();
+    const results = document.getElementById('search-results');
+    if (!q) { results.innerHTML = ''; return; }
+    const articles = getArticles();
+    const found = articles.filter((a, i) => {
+      return a.title.toLowerCase().includes(q) || (a.body||'').toLowerCase().includes(q) || (a.era||'').toLowerCase().includes(q);
+    });
+    if (!found.length) { results.innerHTML = '<div class="empty-state">Niciun rezultat găsit.</div>'; return; }
+    const allArticles = getArticles();
+    results.innerHTML = found.map(a => {
+      const i = allArticles.indexOf(a);
+      return `<div class="article-item" onclick="openArticle(${i})">
+        <div class="article-title">${escHtml(a.title)}</div>
+        <div class="article-era">${escHtml(a.era)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Admin render ──────────────────────────────────────────
+  let editingIndex = -1;
+
+  function renderAdmin() {
+    const articles = getArticles();
+    const list = document.getElementById('admin-articles-list');
+    if (!articles.length) {
+      list.innerHTML = '<div class="empty-state">Niciun articol încă.</div>';
+      return;
+    }
+    list.innerHTML = articles.map((a, i) => `
+      <div class="admin-article-row">
+        <div class="admin-article-info">
+          <div class="admin-article-title">${escHtml(a.title)}</div>
+          <div class="admin-article-meta">${escHtml(a.era)} · ${a.date || 'fără dată'}</div>
+        </div>
+        <div class="admin-actions">
+          <button class="btn-icon" onclick="editArticle(${i})" title="Editează"><i class="ti ti-edit"></i></button>
+          <button class="btn-icon danger" onclick="deleteArticle(${i})" title="Șterge"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function saveArticle() {
+    const title = document.getElementById('f-title').value.trim();
+    const era   = document.getElementById('f-era').value.trim();
+    const body  = document.getElementById('f-body').value.trim();
+    if (!title) { showToast('Adaugă un titlu!'); return; }
+    const articles = getArticles();
+    const now = new Date().toLocaleDateString('ro-RO', { day:'numeric', month:'long', year:'numeric' });
+    if (editingIndex >= 0) {
+      articles[editingIndex] = { ...articles[editingIndex], title, era, body };
+      showToast('Articol actualizat!');
+    } else {
+      articles.unshift({ title, era, body, date: now });
+      showToast('Articol adăugat!');
+    }
+    saveArticles(articles);
+    clearForm();
+    renderAdmin();
+  }
+
+  function editArticle(i) {
+    const a = getArticles()[i];
+    document.getElementById('f-title').value = a.title;
+    document.getElementById('f-era').value = a.era;
+    document.getElementById('f-body').value = a.body || '';
+    editingIndex = i;
+    document.getElementById('cancel-edit-btn').style.display = 'inline-flex';
+    window.scrollTo(0,0);
+  }
+
+  function cancelEdit() { clearForm(); }
+
+  function clearForm() {
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-era').value = '';
+    document.getElementById('f-body').value = '';
+    editingIndex = -1;
+    document.getElementById('cancel-edit-btn').style.display = 'none';
+  }
+
+  function deleteArticle(i) {
+    if (!confirm('Sigur vrei să ștergi acest articol?')) return;
+    const articles = getArticles();
+    articles.splice(i, 1);
+    saveArticles(articles);
+    showToast('Articol șters.');
+    renderAdmin();
+  }
+
+  // ── Toast ─────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ── Secret combo: ↑ ↑ ↓ ↓ ← → ← → ──────────────────────
+  const SECRET = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight'];
+  let comboProgress = [];
+  let unlockTimer = null;
+
+  function updateUnlockDots() {
+    const dots = document.getElementById('unlock-dots');
+    dots.innerHTML = SECRET.map((_, i) => `<div class="unlock-dot ${i < comboProgress.length ? 'active' : ''}"></div>`).join('');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (!SECRET.includes(e.key)) {
+      comboProgress = [];
+      document.getElementById('admin-unlock').classList.remove('visible');
+      return;
+    }
+
+    // show overlay after first key
+    if (comboProgress.length === 0) {
+      document.getElementById('admin-unlock').classList.add('visible');
+    }
+
+    if (e.key === SECRET[comboProgress.length]) {
+      comboProgress.push(e.key);
+      updateUnlockDots();
+      clearTimeout(unlockTimer);
+
+      if (comboProgress.length === SECRET.length) {
+        setTimeout(() => {
+          document.getElementById('admin-unlock').classList.remove('visible');
+          comboProgress = [];
+          showPage('admin');
+        }, 400);
+      } else {
+        unlockTimer = setTimeout(() => {
+          comboProgress = [];
+          document.getElementById('admin-unlock').classList.remove('visible');
+        }, 3000);
+      }
+    } else {
+      comboProgress = [];
+      document.getElementById('admin-unlock').classList.remove('visible');
+    }
+  });
+
+  // Show combo hint on first visit
+  if (!localStorage.getItem('dacebalo_visited')) {
+    localStorage.setItem('dacebalo_visited', '1');
+    const hint = document.getElementById('combo-hint');
+    hint.classList.add('show');
+    setTimeout(() => hint.classList.remove('show'), 5000);
+  }
+
+  // ── Utils ─────────────────────────────────────────────────
+  function escHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Init ──────────────────────────────────────────────────
+  renderHome();
+</script>
+</body>
+</html>
